@@ -1,0 +1,94 @@
+/* Upgrade page container */
+.upgrade-container {
+    background-color: #f4f4f9;
+    min-height: 100vh;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  /* Upgrade cards container */
+  .upgrade-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Individual upgrade card */
+  .upgrade-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .upgrade-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Title for each card */
+  .upgrade-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Price for each plan */
+  .upgrade-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #4caf50;
+    margin-bottom: 15px;
+  }
+  
+  /* Description for each card */
+  .upgrade-description {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  /* Upgrade Now button */
+  .upgrade-button {
+    background-color: #3182ce;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px 25px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .upgrade-button:hover {
+    background-color: #2b6cb0;
+    transform: scale(1.05);
+  }
+  
+  /* Responsive Design: Adjust layout for smaller screens */
+  @media screen and (max-width: 768px) {
+    .upgrade-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .upgrade-cards {
+      grid-template-columns: 1fr;
+    }
+  
+    .upgrade-button {
+      padding: 12px 20px;
+    }
+  }
+  

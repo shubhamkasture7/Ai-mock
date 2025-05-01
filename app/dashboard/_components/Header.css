@@ -1,0 +1,12 @@
+li:hover {
+
+    color: rgb(70, 70, 194);
+    transition: all 0.3s ease-in;
+    font: bolder;
+    cursor: pointer;
+
+}
+
+li{
+    font-weight: bolder;
+}

@@ -1,0 +1,7 @@
+.custom-addinterview{
+    height: 200px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transition: 0.3s ease;
+}
