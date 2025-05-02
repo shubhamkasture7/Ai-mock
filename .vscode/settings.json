@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/e6ec6d26-2653-4feb-ad77-83d677f19d1a/resourceGroups/appsvc_linux_centralindia/providers/Microsoft.Web/sites/Ai-mock",
+    "appService.deploySubpath": "."
+}
