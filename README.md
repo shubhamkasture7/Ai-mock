@@ -1,7 +1,3 @@
-Here’s a professional and enhanced `README.md` file for your **NextGenHire** project, including details about the **Next.js** framework, the **Interview Module using Gemini AI**, and relevant emojis for engagement and clarity:
-
----
-
 ```markdown
 # 🚀 NextGenHire – AI-Powered Career Assistant
 
