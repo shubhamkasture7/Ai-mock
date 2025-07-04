@@ -5,7 +5,7 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import "./Header.css"; // Keep your own styles if needed
+import "./Header.css"; // Keep for custom overrides if needed
 
 function Header() {
   const path = usePathname();
@@ -14,14 +14,13 @@ function Header() {
 
   useEffect(() => {
     setHasMounted(true);
-    console.log("Current path:", path);
-  }, [path]);
+  }, []);
 
   if (!hasMounted) return null;
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard" },
-    { path: "/dashboard/questiones", label: "Questiones" },
+    { path: "/dashboard/questiones", label: "Questions" },
     { path: "/dashboard/upgrade", label: "Upgrade" },
     { path: "/dashboard/how", label: "How it works?" },
   ];
@@ -31,49 +30,66 @@ function Header() {
   };
 
   const handleNavClick = () => {
-    setIsMobileMenuOpen(false); // Auto-close mobile menu
+    setIsMobileMenuOpen(false); // Close on click
   };
 
   return (
-    <div className="flex p-4 items-center justify-between bg-secondary shadow-sm relative z-50">
-      <Image src={"/logo.svg"} width={160} height={100} alt="logo" />
+    <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg fixed w-full z-50">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/">
+          <Image
+            src="/logo.svg"
+            width={150}
+            height={50}
+            alt="Logo"
+            className="cursor-pointer"
+          />
+        </Link>
 
-      {/* Desktop Navigation */}
-      <ul className="hidden md:flex gap-8">
-        {navItems.map(({ path: navPath, label }) => (
-          <li key={navPath}>
-            <Link href={navPath} passHref>
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex gap-8">
+          {navItems.map(({ path: navPath, label }) => (
+            <Link key={navPath} href={navPath} passHref>
               <span
-                className={`transition-all duration-200 cursor-pointer hover:text-blue-500 ${
+                className={`cursor-pointer font-medium transition-all duration-300 hover:text-yellow-300 ${
                   path.startsWith(navPath)
-                    ? "text-blue-600 font-semibold underline underline-offset-4"
-                    : "text-gray-700"
+                    ? "underline underline-offset-4 text-yellow-300 font-semibold"
+                    : "text-white"
                 }`}
               >
                 {label}
               </span>
             </Link>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </nav>
 
-      {/* Mobile Toggle */}
-      <button className="md:hidden text-2xl" onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? "✖" : "☰"}
-      </button>
+        {/* User Profile */}
+        <div className="ml-4">
+          <UserButton afterSignOutUrl="/" />
+        </div>
 
-      {/* Mobile Dropdown */}
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={toggleMobileMenu}
+          className="md:hidden text-white text-2xl focus:outline-none"
+        >
+          {isMobileMenuOpen ? "✖" : "☰"}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-16 left-4 right-4 bg-white shadow-md p-4 rounded-xl animate-slideDown">
-          <ul>
+        <div className="md:hidden bg-white text-gray-800 shadow-lg rounded-b-xl px-6 py-4 animate-slideDown">
+          <ul className="space-y-4">
             {navItems.map(({ path: navPath, label }) => (
-              <li key={navPath} className="py-2" onClick={handleNavClick}>
+              <li key={navPath} onClick={handleNavClick}>
                 <Link href={navPath} passHref>
                   <span
-                    className={`transition-colors duration-200 cursor-pointer block ${
+                    className={`block font-medium text-lg transition-all duration-200 ${
                       path.startsWith(navPath)
-                        ? "text-blue-600 font-semibold underline underline-offset-4"
-                        : "text-gray-700"
+                        ? "text-indigo-600 underline underline-offset-4"
+                        : "hover:text-purple-600"
                     }`}
                   >
                     {label}
@@ -84,12 +100,7 @@ function Header() {
           </ul>
         </div>
       )}
-
-      {/* User Avatar */}
-      <div className="ml-4">
-        <UserButton />
-      </div>
-    </div>
+    </header>
   );
 }
 

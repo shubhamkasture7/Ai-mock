@@ -27,7 +27,7 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white py-12 px-4 md:px-16">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white py-12 px-4 pt-[100px] md:px-16">
       <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-12">
         How It Works
       </h1>

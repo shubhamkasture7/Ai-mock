@@ -1,3 +1,4 @@
+"use client"
 import { useRouter } from 'next/navigation'; // Import useRouter from next/navigation
 import { Button } from '@/components/ui/button'; // Ensure the Button component is correctly imported
 import React from 'react';
