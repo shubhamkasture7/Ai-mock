@@ -1,15 +1,20 @@
-import React from 'react'
-import Header from './_components/Header'
+import React from "react";
+import DashboardBox from "./_components/DashboardBox";
 
-function DashboardLayout({children}) {
+function DashboardLayout({ children }) {
   return (
-    <div>
-      <Header />
-        <div className='mx-5 md:mx-20 lg:mx-36'>
+    <div className="flex flex-col md:flex-row">
+      {/* Sidebar / Dashboard Menu */}
+      <div className="md:w-64 flex-shrink-0">
+        <DashboardBox />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 mx-5 md:mx-10 lg:mx-20 py-5">
         {children}
-        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default DashboardLayout
+export default DashboardLayout;

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-  "start": "node .next/standalone/server.js",
+    "start": "node .next/standalone/server.js",
     "lint": "next lint",
     "db:push": "npx drizzle-kit push",
     "db:studio": "npx drizzle-kit studio"
@@ -31,6 +31,7 @@
     "react-dom": "^18",
     "react-hook-speech-to-text": "^0.8.0",
     "react-webcam": "^7.2.0",
+    "recharts": "^3.2.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0"

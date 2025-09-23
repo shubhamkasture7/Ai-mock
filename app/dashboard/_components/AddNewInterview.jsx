@@ -79,10 +79,11 @@ if(MockJsonResp){
         <div>
             {/* Button to trigger the dialog */}
             <div
-                className='p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-md cursor-pointer custom-addinterview'
+                className='mt-4 px-6 py-2 bg-[#0A1730] text-white font-medium rounded-lg 
+                         hover:bg-[#132544] transition-colors duration-200 cursor-pointer'
                 onClick={() => setOpenDialog(true)} // Open dialog on click
             >
-                <h2 className='text-lg text-center'>+ Add New</h2>
+                <h2 className='text-lg text-center'>Create Interview</h2>
             </div>
 
             {/* Dialog component */}
