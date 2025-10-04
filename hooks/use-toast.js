@@ -153,23 +153,20 @@ function useToast() {
 }
 
 export { useToast, toast }
-if ('webkitSpeechRecognition' in window) {
-  const recognition = new webkitSpeechRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.lang = 'en-US';
+let recognition;
 
-  // store in window to access globally
-  window.recognition = recognition;
+if (typeof window !== 'undefined' && 'webkitSpeechRecognition' in window) {
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
 
-  // use this to capture final result
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    console.log('User said:', transcript);
-    // save this to your answer state
-  };
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        console.log('User said:', transcript);
+    };
 
-  recognition.onerror = (e) => {
-    console.error('Speech recognition error:', e.error);
-  };
+    recognition.onerror = (e) => console.error('Speech recognition error:', e.error);
+} else {
+    console.warn('Web Speech API is not available in this browser 🤷‍');
 }
