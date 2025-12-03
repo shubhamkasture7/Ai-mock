@@ -349,35 +349,51 @@ Give a JSON response ONLY in this format (no extra text):
         )}
 
         <Button
-          onClick={() => setIsWebcamEnabled((prev) => !prev)}
-          variant="outline"
-          className="mt-3 flex items-center gap-2 text-xs sm:text-sm"
-        >
-          <WebcamIcon className="w-4 h-4" />
-          {isWebcamEnabled ? "Disable Webcam" : "Enable Webcam"}
-        </Button>
+  onClick={() => setIsWebcamEnabled((prev) => !prev)}
+  variant="outline"
+  className="
+    mt-3 flex items-center gap-2 text-xs sm:text-sm
+    bg-gray-100 border border-dashed border-gray-300 text-black
+    transition-all duration-300 ease-in-out
+    hover:bg-indigo-50 hover:border-indigo-400 hover:text-indigo-700 hover:shadow-md hover:scale-[1.02]
+    active:scale-95
+  "
+>
+  <WebcamIcon className="w-4 h-4" />
+  {isWebcamEnabled ? "Disable Webcam" : "Enable Webcam"}
+</Button>
+
       </div>
 
       {/* Controls */}
       <div className="mt-6 flex flex-col sm:flex-row gap-3 items-center">
         <Button
-          disabled={loading}
-          onClick={handleRecordButton}
-          variant={isRecording ? "destructive" : "outline"}
-          className="flex items-center gap-2"
-        >
-          {isRecording ? (
-            <>
-              <StopCircle className="w-4 h-4" />
-              Stop & Save
-            </>
-          ) : (
-            <>
-              <Mic className="w-4 h-4" />
-              Start Recording
-            </>
-          )}
-        </Button>
+  disabled={loading}
+  onClick={handleRecordButton}
+  variant="outline"
+  className={`
+    flex items-center gap-2 py-2 px-4 rounded-lg font-medium
+    transition-all duration-300 ease-in-out
+    ${isRecording
+      ? "bg-red-500 text-white border-red-600 shadow-lg animate-pulse hover:bg-red-600 hover:shadow-xl hover:scale-[1.03]"
+      : "bg-gray-100 border border-gray-300 text-gray-800 hover:bg-indigo-50 hover:border-indigo-400 hover:text-indigo-700 hover:shadow-md hover:scale-[1.03]"
+    }
+    active:scale-95
+  `}
+>
+  {isRecording ? (
+    <>
+      <StopCircle className="w-4 h-4 animate-pulse" />
+      Stop & Save
+    </>
+  ) : (
+    <>
+      <Mic className="w-4 h-4" />
+      Start Recording
+    </>
+  )}
+</Button>
+
 
         {typeof onNextQuestion === "function" && (
           <Button

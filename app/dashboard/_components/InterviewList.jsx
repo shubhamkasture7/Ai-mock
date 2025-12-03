@@ -39,7 +39,7 @@ function InterviewList() {
 
   return (
     <div className="mt-6">
-      <h2 className="font-semibold text-lg mb-3">Previous Mock Interviews</h2>
+      <h2 className="font-semibold text-black text-lg mb-3">Previous Mock Interviews</h2>
 
       {/* Loader when fetching data */}
       {loading ? (
@@ -52,7 +52,7 @@ function InterviewList() {
         <>
           {/* Show message if no history exists */}
           {interviewList.length === 0 ? (
-            <div className="text-center text-gray-500 mt-5">
+            <div className="text-center text-gray-600 mt-5">
               No mock interviews created yet.
             </div>
           ) : (

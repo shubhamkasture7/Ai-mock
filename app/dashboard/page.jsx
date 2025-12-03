@@ -180,11 +180,11 @@ function Dashboard() {
         </div>
 
         {/* ➕ Add New Interview (more compact) */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center text-center">
-          <div className="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full mb-2 text-xl">
+        <div className="bg-white rounded-2xl border border-gray-300 shadow-sm p-6 flex flex-col items-center text-center">
+          <div className="w-10 h-10 flex items-center justify-center text-black bg-gray-100 rounded-full mb-2 text-xl">
             +
           </div>
-          <h3 className="font-semibold text-base">Create a new mock interview</h3>
+          <h3 className="font-semibold text-black text-base">Create a new mock interview</h3>
           <p className="text-gray-500 text-xs mt-1 mb-3 max-w-sm">
             Generate AI-powered interview questions tailored to your role and
             experience.
@@ -196,7 +196,7 @@ function Dashboard() {
         <section className="space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-800">
-              Previous Mock Interviews
+              Interview Lists
             </h3>
             <button className="text-xs font-medium text-blue-600 hover:underline">
               View All

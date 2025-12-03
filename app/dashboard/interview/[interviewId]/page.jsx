@@ -192,7 +192,7 @@ function Interview({ params }) {
 
           <div className="flex gap-3">
             <Link href="/dashboard">
-              <Button variant="outline" className="text-sm">
+              <Button variant="outline" className="text-sm text-black">
                 Cancel
               </Button>
             </Link>

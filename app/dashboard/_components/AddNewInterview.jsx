@@ -145,7 +145,7 @@ Rules:
                 <DialogTitle className="text-xl font-semibold">
                   AI-Powered Mock Interview
                 </DialogTitle>
-                <p className="text-sm text-indigo-100 mt-2">
+                <p className="text-sm text-amber-950 mt-2">
                   Give us your role & skills → We make interview for you!
                 </p>
               </div>
