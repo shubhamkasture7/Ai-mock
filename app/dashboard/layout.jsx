@@ -12,7 +12,8 @@ function DashboardLayout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       {/* 🌈 Top Navbar */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500">
+<header className="hidden sm:block sticky top-0 z-30 border-b border-slate-200 
+  bg-gradient-to-r from-indigo-600 via-sky-500 to-emerald-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between text-white">
           
           {/* Left: Logo + Brand */}

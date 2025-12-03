@@ -20,7 +20,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://nextgenmock.vercel.app"), // change later
+  metadataBase: new URL("https://nextgenmock.vercel.app/"), // change later
   title: {
     default: "Next Gen Hire",
     template: "%s | Next Gen Hire",
