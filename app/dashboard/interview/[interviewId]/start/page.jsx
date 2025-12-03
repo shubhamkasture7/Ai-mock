@@ -21,8 +21,9 @@ function StartInterview({ params }) {
     }, []);
 
     const GetInterviewDetails = async () => {
+        let result;
         try {
-            const result = await db.select().from(MockInterview)
+            result = await db.select().from(MockInterview)
                 .where(eq(MockInterview.mockId, params.interviewId));
 
             if (result && result.length > 0 && result[0].jsonMockResp) {
@@ -37,6 +38,7 @@ function StartInterview({ params }) {
             }
         } catch (error) {
             console.error("Failed to parse JSON mock response:", error);
+            console.error("Raw response:", result && result[0]?.jsonMockResp?.substring(0, 200));
             // Handle the error gracefully, e.g., show an error message to the user
             // or redirect them to an error page.
         }

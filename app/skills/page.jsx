@@ -1,7 +1,5 @@
+// app/skills/page.js
 "use client";
-
-import React from "react";
-import DashboardBox from "../dashboard/_components/DashboardBox";
 
 export default function SkillsPage() {
   const skills = [
@@ -38,14 +36,8 @@ export default function SkillsPage() {
   ];
 
   return (
-    <div className="flex w-full min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <aside className="w-64">
-        <DashboardBox />
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-8">
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-[#0A1730] text-white rounded-lg p-6 mb-8 shadow">
           <h1 className="text-2xl font-bold">Skills & Learning</h1>
@@ -55,7 +47,7 @@ export default function SkillsPage() {
         </div>
 
         {/* Skill Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {skills.map((skill, index) => (
             <div
               key={index}
@@ -75,7 +67,7 @@ export default function SkillsPage() {
             </div>
           ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 }

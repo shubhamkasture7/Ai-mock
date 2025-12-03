@@ -1,7 +1,9 @@
+// app/layout.js (RootLayout)
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import Sidebar from "@/app/dashboard/_components/DashboardBox"; // 👈 import sidebar
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,14 +24,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-         <Toaster />
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {/* Fixed, responsive sidebar */}
+          <Sidebar />
+
+          {/* Main content: full width on mobile, shifted right on desktop */}
+          <div className="sm:ml-64 ml-0">
+            <Toaster />
+            {children}
+          </div>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

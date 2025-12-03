@@ -6,13 +6,17 @@ import { useUser } from "@clerk/nextjs"; // 👈 fetch logged-in user
 import StatCard from "@/components/StatCard";
 import PerformanceChart from "@/components/PerformanceChart";
 import SkillsChart from "@/components/SkillsChart";
-import DashboardBox from "../dashboard/_components/DashboardBox";
-
 
 export default function ProfilePage() {
   const { user } = useUser();
   const [interviewHistory, setInterviewHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // 🔢 total interviews generated (from DB)
+  const [totalGenerated, setTotalGenerated] = useState(0);
+
+  // ⭐ rating-wise counts, e.g. { "8": 3, "9": 5 }
+  const [ratingCounts, setRatingCounts] = useState({});
 
   useEffect(() => {
     if (!user) return;
@@ -22,8 +26,28 @@ export default function ProfilePage() {
         const res = await fetch(
           `/api/interviews?email=${user.primaryEmailAddress?.emailAddress}`
         );
+
+        if (!res.ok) {
+          console.error("API error:", res.status);
+          setLoading(false);
+          return;
+        }
+
         const data = await res.json();
-        setInterviewHistory(data);
+
+        // If API returns: { interviews, totalGenerated, ratingCounts }
+        if (Array.isArray(data)) {
+          // old behaviour: API returns only array of interviews
+          setInterviewHistory(data);
+        } else {
+          setInterviewHistory(data.interviews || []);
+          if (typeof data.totalGenerated === "number") {
+            setTotalGenerated(data.totalGenerated);
+          }
+          if (data.ratingCounts && typeof data.ratingCounts === "object") {
+            setRatingCounts(data.ratingCounts);
+          }
+        }
       } catch (error) {
         console.error("Failed to fetch interview history:", error);
       } finally {
@@ -42,23 +66,23 @@ export default function ProfilePage() {
     );
   }
 
+  // 📊 Stats
+  const totalInterviews = totalGenerated || interviewHistory.length;
+
   const averageScore =
-    interviewHistory.length > 0
+    totalInterviews > 0
       ? (
           interviewHistory.reduce(
             (acc, item) => acc + (parseFloat(item.score) || 0),
             0
-          ) / interviewHistory.length
+          ) / totalInterviews
         ).toFixed(1)
       : 0;
 
+  const skillImprovement = totalInterviews > 5 ? "+32%" : "+10%";
+  const timeSaved = `${totalInterviews * 2}h`; // Example logic
+
   return (
-    <div className="flex ">
-    <div>
-              <aside className="w-64">
-                <DashboardBox />
-              </aside>
-    </div>
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         {/* Profile Header */}
@@ -83,7 +107,7 @@ export default function ProfilePage() {
             <StatCard
               icon="📊"
               title="Total Interviews"
-              value={interviewHistory.length}
+              value={totalInterviews}
             />
             <StatCard
               icon="🎯"
@@ -101,7 +125,8 @@ export default function ProfilePage() {
           {/* Charts Section */}
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <PerformanceChart data={interviewHistory} />
-            <SkillsChart data={[]} /> {/* later hook into DB for real skill data */}
+            <SkillsChart data={[]} />{" "}
+            {/* later hook into DB for real skill data */}
           </section>
 
           {/* Interview History Table */}
@@ -138,7 +163,11 @@ export default function ProfilePage() {
                         {interview.date
                           ? new Date(interview.date).toLocaleDateString(
                               "en-US",
-                              { month: "short", day: "numeric", year: "numeric" }
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }
                             )
                           : "N/A"}
                       </td>
@@ -154,7 +183,10 @@ export default function ProfilePage() {
                   ))}
                   {interviewHistory.length === 0 && (
                     <tr>
-                      <td colSpan="4" className="p-4 text-center text-gray-500">
+                      <td
+                        colSpan="4"
+                        className="p-4 text-center text-gray-500"
+                      >
                         No interviews found.
                       </td>
                     </tr>
@@ -163,9 +195,28 @@ export default function ProfilePage() {
               </table>
             </div>
           </section>
+
+          {/* ⭐ Interviews by Rating */}
+          {Object.keys(ratingCounts).length > 0 && (
+            <section className="mt-4">
+              <h3 className="font-semibold text-lg mb-3 text-gray-700">
+                Interviews by Rating
+              </h3>
+              <div className="flex flex-wrap gap-4">
+                {Object.entries(ratingCounts).map(([rating, count]) => (
+                  <div
+                    key={rating}
+                    className="bg-white border rounded-xl p-4 text-center shadow-sm min-w-[110px]"
+                  >
+                    <h4 className="text-xl font-bold">{count}</h4>
+                    <p className="text-gray-500 text-sm">Rating {rating}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </main>
       </div>
-    </div>
     </div>
   );
 }

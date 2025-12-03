@@ -1,73 +1,129 @@
-import { Lightbulb, Volume2 } from 'lucide-react';
-import React from 'react';
-import './QuestionIndex.css';
+// app/components/QuestionSection.js
+"use client";
 
-function QuestionSection({ mockInterviewQuestion, activeQuestionIndex }) {
-  if (!Array.isArray(mockInterviewQuestion)) {
+import React, { useEffect } from "react";
+import { Lightbulb, Volume2 } from "lucide-react";
+
+function QuestionSection({
+  mockInterviewQuestion,
+  activeQuestionIndex,
+  onChangeQuestion, // function(index) => void
+}) {
+  if (!Array.isArray(mockInterviewQuestion) || mockInterviewQuestion.length === 0) {
     return null;
   }
 
-  const textToSpeech = (text) => {
-    if ('speechSynthesis' in window) {
-      if (window.recognition?.running) {
-        setTimeout(() => {
-          window.recognition.stop();
-        }, 0);
-      }
+  const totalQuestions = mockInterviewQuestion.length;
+  const currentQuestion = mockInterviewQuestion[activeQuestionIndex];
 
-      const speech = new SpeechSynthesisUtterance(text);
-      speech.onend = () => {
-        if (window.recognition) {
-          setTimeout(() => {
-            window.recognition.start();
-          }, 0);
-        }
-      };
-      window.speechSynthesis.speak(speech);
+  const textToSpeech = (text) => {
+    if (typeof window === "undefined") return;
+
+    if ("speechSynthesis" in window) {
+      // Stop anything already speaking
+      window.speechSynthesis.cancel();
+
+      if (!text) return;
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
     } else {
-      alert('Sorry, your browser doesn’t support text-to-speech.');
+      alert("Sorry, your browser doesn’t support text-to-speech.");
     }
   };
 
+  // Stop TTS whenever question changes
+  useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+  }, [activeQuestionIndex]);
+
+  // Stop TTS on unmount (changing page)
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   return (
-    <div className="mt-10 p-6 border rounded-xl bg-white shadow-lg">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {mockInterviewQuestion.map((question, index) => (
-          <div
+    <div className="mt-8 p-6 rounded-2xl bg-white shadow-md border border-gray-100">
+      {/* Header: title + progress */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-500">
+            Question {activeQuestionIndex + 1} of {totalQuestions}
+          </p>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 mt-1">
+            Interview Questions
+          </h2>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-gray-500">
+          <span className="w-20 h-1.5 rounded-full bg-gray-200 overflow-hidden">
+            <span
+              className="block h-full bg-indigo-500 transition-all"
+              style={{
+                width: `${((activeQuestionIndex + 1) / totalQuestions) * 100}%`,
+              }}
+            />
+          </span>
+          <span>
+            {Math.round(((activeQuestionIndex + 1) / totalQuestions) * 100)}% complete
+          </span>
+        </div>
+      </div>
+
+      {/* Question pills (clickable) */}
+      <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
+        {mockInterviewQuestion.map((_, index) => (
+          <button
             key={index}
-            className={`py-2 px-4 rounded-lg text-sm font-medium text-center shadow transition duration-200 transform hover:scale-105 cursor-pointer ${
+            type="button"
+            onClick={() => {
+              if (typeof onChangeQuestion === "function") {
+                onChangeQuestion(index);
+              }
+            }}
+            className={`min-w-[90px] px-3 py-2 rounded-full text-xs font-medium text-center border transition-all duration-200 ${
               activeQuestionIndex === index
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-800'
+                ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
+                : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100"
             }`}
           >
-            Question # {index + 1}
-          </div>
+            Q {index + 1}
+          </button>
         ))}
       </div>
 
-      <div className="flex justify-between items-center mt-8">
-        <h2 className="text-lg font-semibold text-gray-800">
-          {mockInterviewQuestion[activeQuestionIndex]?.question}
-        </h2>
+      {/* Current question + read-aloud button */}
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-base sm:text-lg font-medium text-gray-800 leading-relaxed flex-1">
+          {currentQuestion?.question || "No question loaded."}
+        </p>
+
         <button
-          className="ml-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-md transition"
-          onClick={() =>
-            textToSpeech(mockInterviewQuestion[activeQuestionIndex]?.question)
-          }
+          type="button"
+          className="shrink-0 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 p-2 rounded-full shadow-sm border border-indigo-100 transition"
+          onClick={() => textToSpeech(currentQuestion?.question)}
+          aria-label="Read question aloud"
         >
-          <Volume2 size={20} />
+          <Volume2 size={18} />
         </button>
       </div>
 
-      <div className="border-l-4 border-yellow-400 bg-yellow-50 p-5 mt-12 rounded-lg shadow-sm">
-        <h2 className="flex items-center gap-2 text-yellow-700 font-semibold text-md mb-2">
-          <Lightbulb />
+      {/* Tip section */}
+      <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4 mt-8 rounded-lg shadow-sm">
+        <h3 className="flex items-center gap-2 text-yellow-800 font-semibold text-sm mb-1">
+          <Lightbulb className="w-4 h-4" />
           Tip
-        </h2>
-        <p className="text-sm text-yellow-800">
+        </h3>
+        <p className="text-xs sm:text-sm text-yellow-900">
           {process.env.NEXT_PUBLIC_QUESTION_NOTE ||
-            'Think clearly and answer with confidence.'}
+            "Take a moment to structure your thoughts, then answer clearly with real examples."}
         </p>
       </div>
     </div>
