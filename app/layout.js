@@ -21,14 +21,17 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://nextgenmock.vercel.app/"), // change later
+  metadataBase: new URL("https://nextgenmock.vercel.app/"),
   title: {
     default: "Next Gen Hire",
     template: "%s | Next Gen Hire",
   },
   description:
     "Next Gen Hire helps job seekers crack interviews with AI-powered mock interviews, resume feedback, and smart career tools.",
-  // ... other metadata (keywords, openGraph, twitter, robots, etc.)
+
+  other: {
+    "google-site-verification": "MT5hlTss2wut-ey5gsfKHbGRlw2wTYubkKGa6L4xyZ0",
+  },
 
   icons: {
     icon: [
@@ -53,6 +56,7 @@ export const metadata = {
     ],
   },
 };
+
 
 
 export default function RootLayout({ children }) {
