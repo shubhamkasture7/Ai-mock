@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Sidebar from "@/app/dashboard/_components/DashboardBox"; // sidebar
 import Image from "next/image";
 // import logo from "@/public/logo.jpg";
+import { Analytics } from "@vercel/analytics/next"
 
 
 const geistSans = localFont({
@@ -80,6 +81,8 @@ export default function RootLayout({ children }) {
                   Next Gen Hire
                 </span>
               </header>
+              {children}
+        <Analytics />
 
               <Toaster />
               <main>{children}</main>
