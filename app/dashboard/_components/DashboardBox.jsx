@@ -27,7 +27,7 @@ const sidebarItems = [
   },
   { path: "/skills", label: "Skills Tests", icon: CheckSquare },
   {
-    path: "/dashboard/messages",
+    path: "/messages",
     label: "Messages",
     icon: MessageCircle,
     badgeCount: 3,
@@ -64,7 +64,7 @@ export default function Sidebar() {
     >
       {/* Top Section */}
       <div>
-        <div className="p-6 font-bold text-lg">JobPortal</div>
+        <div className="p-6 font-bold text-lg">Dashboard</div>
 
         <ul className="mt-4 space-y-1">
           {sidebarItems.map(({ path: navPath, label, icon: Icon, badge, badgeCount }) => {

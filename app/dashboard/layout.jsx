@@ -18,7 +18,11 @@ function DashboardLayout({ children }) {
           {/* Left: Logo + Brand */}
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-white/15 flex items-center justify-center shadow-md">
-              <span className="text-lg font-black tracking-tight">NH</span>
+<img 
+  src="/logo.svg" 
+  alt="Logo"
+  className="h-30 w-30 object-contain"
+/>
             </div>
             <div className="flex flex-col leading-tight">
               <span className="font-semibold text-sm sm:text-base">

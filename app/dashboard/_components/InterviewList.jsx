@@ -1,42 +1,71 @@
-"use client"
-import { MockInterview } from '@/utils/schema';
-import { useUser } from '@clerk/nextjs';
-import { desc, eq } from 'drizzle-orm';
-import React, { useEffect, useState } from 'react';
-import { db } from '@/utils/db';
-import InterviewItemCard from './InterviewItemCard';
+"use client";
+import { MockInterview } from "@/utils/schema";
+import { useUser } from "@clerk/nextjs";
+import { desc, eq } from "drizzle-orm";
+import React, { useEffect, useState } from "react";
+import { db } from "@/utils/db";
+import InterviewItemCard from "./InterviewItemCard";
+import ShadowLoader from "@/app/dashboard/_components/ShadowLoader"; // ⬅️ Import loader
 
 function InterviewList() {
-    const { user } = useUser();
-    const [interviewList, setInterviewList] = useState([]);
+  const { user } = useUser();
+  const [interviewList, setInterviewList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (user) {
-            GetInterviewList();
-        }
-    }, [user]);
+  useEffect(() => {
+    if (user) fetchInterviewList();
+  }, [user]);
 
-    const GetInterviewList = async () => {
-        const result = await db
-            .select()
-            .from(MockInterview)
-            .where(eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress))
-            .orderBy(desc(MockInterview.id));
-        
-        console.log(result);
-        setInterviewList(result);
-    };
+  const fetchInterviewList = async () => {
+    try {
+      const result = await db
+        .select()
+        .from(MockInterview)
+        .where(
+          eq(
+            MockInterview.createdBy,
+            user?.primaryEmailAddress?.emailAddress
+          )
+        )
+        .orderBy(desc(MockInterview.id));
 
-    return (
-        <div>
-            <h2 className='font-medium text-xl'>Previous Mock Interview</h2>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3'>
-                {interviewList && interviewList.map((interview, index) => (
-                    <InterviewItemCard key={index} interview={interview} />
-                    ))}
-            </div>
+      setInterviewList(result);
+    } catch (error) {
+      console.error("Error fetching interviews:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="mt-6">
+      <h2 className="font-semibold text-lg mb-3">Previous Mock Interviews</h2>
+
+      {/* Loader when fetching data */}
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <ShadowLoader key={i} />
+          ))}
         </div>
-    );
+      ) : (
+        <>
+          {/* Show message if no history exists */}
+          {interviewList.length === 0 ? (
+            <div className="text-center text-gray-500 mt-5">
+              No mock interviews created yet.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-4">
+              {interviewList.map((interview) => (
+                <InterviewItemCard key={interview.mockId} interview={interview} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
 }
 
 export default InterviewList;
