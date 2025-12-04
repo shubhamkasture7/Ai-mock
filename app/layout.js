@@ -28,11 +28,9 @@ export const metadata = {
   },
   description:
     "Next Gen Hire helps job seekers crack interviews with AI-powered mock interviews, resume feedback, and smart career tools.",
-
-  other: {
-    "google-site-verification": "MT5hlTss2wut-ey5gsfKHbGRlw2wTYubkKGa6L4xyZ0",
+  verification: {
+    google: "MT5hlTss2wut-ey5gsfKHbGRlw2wTYubkKGa6L4xyZ0",
   },
-
   icons: {
     icon: [
       {
@@ -56,6 +54,7 @@ export const metadata = {
     ],
   },
 };
+
 
 
 
@@ -85,11 +84,11 @@ export default function RootLayout({ children }) {
                   Next Gen Hire
                 </span>
               </header>
-              {children}
-        <Analytics />
+              {/* {children}*/}
+              <main>{children}</main>
+        <Analytics /> 
 
               <Toaster />
-              <main>{children}</main>
             </div>
           </div>
         </body>
