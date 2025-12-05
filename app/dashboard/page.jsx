@@ -211,19 +211,19 @@ function Dashboard() {
         <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Total Interviews</p>
-            <h4 className="text-xl font-semibold">{totalInterviews}</h4>
+            <h4 className="text-xl text-blue-900 font-semibold">{totalInterviews}</h4>
           </div>
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Average Score</p>
-            <h4 className="text-xl font-semibold">{averageScore}</h4>
+            <h4 className="text-xl text-blue-900 font-semibold">{averageScore}</h4>
           </div>
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Time Saved</p>
-            <h4 className="text-xl font-semibold">{timeSaved}</h4>
+            <h4 className="text-xl text-blue-900 font-semibold">{timeSaved}</h4>
           </div>
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
             <p className="text-xs text-gray-500 mb-1">Skill Improvement</p>
-            <h4 className="text-xl font-semibold">{skillImprovement}</h4>
+            <h4 className="text-xl text-blue-900 font-semibold">{skillImprovement}</h4>
           </div>
         </section>
 
@@ -242,7 +242,7 @@ function Dashboard() {
                   <p className="text-[11px] text-gray-500 mb-1">
                     Rating {rating}
                   </p>
-                  <p className="text-lg font-semibold">{count}</p>
+                  <p className="text-lg text-black font-semibold">{count}</p>
                 </div>
               ))}
             </div>
