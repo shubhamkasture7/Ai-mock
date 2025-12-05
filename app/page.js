@@ -25,4 +25,5 @@ export default async function Home() {
 
   // Logged in → go to dashboard
   redirect("/dashboard");
+ 
 }
